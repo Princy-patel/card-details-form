@@ -17,28 +17,35 @@ function Form({
 
   const handleSubmit = function (e) {
     e.preventDefault();
-    if (errorMessage.name.length <= 0) {
-      setErrorMessage({ ...errorMessage, name: "Please Enter your name" });
+
+    let errors = {};
+
+    if (!inputValue.name.trim()) {
+      errors = { ...errors, name: "Please enter your name" };
     }
-    if (!errorMessage.cardNumber) {
-      setErrorMessage({
-        ...errorMessage,
-        cardNumber: "Wrong format, Numbers only",
-      });
+    if (!inputValue.cardNumber.trim()) {
+      errors = { ...errors, cardNumber: "Wrong format, 16 numbers required" };
     }
-    if (!errorMessage.dateMonth) {
-      setErrorMessage({ ...errorMessage, dateMonth: "Can't be blank" });
+    if (!/^\d{2}$/.test(inputValue.dateMonth)) {
+      errors = { ...errors, dateMonth: "MM must be 2 digits" };
     }
-    if (!errorMessage.dateYear) {
-      setErrorMessage({ ...errorMessage, dateYear: "Can't be blank" });
+    if (!/^\d{2}$/.test(inputValue.dateYear)) {
+      errors = { ...errors, dateYear: "YY must be 2 digits" };
     }
-    if (!errorMessage.cvcNumber) {
-      setErrorMessage({
-        ...errorMessage,
-        cvcNumber: "Can't be blank",
-      });
+    if (!/^\d{3}$/.test(inputValue.cvcNumber)) {
+      errors = { ...errors, cvcNumber: "CVC must be 3 digits" };
     }
-    setSubmitValue(inputValue);
+
+    // Update error messages
+    setErrorMessage(errors);
+
+    console.log("errors", errorMessage);
+
+    // If there are no errors, submit the form
+    if (Object.keys(errors).length === 0) {
+      setSubmitValue(inputValue);
+      console.log("Form submitted:", inputValue);
+    }
   };
 
   return (
@@ -49,14 +56,14 @@ function Form({
       >
         <div className="mb-5">
           <label
-            htmlFor="base-input"
+            htmlFor="cardName"
             className="block mb-2 text-sm font-medium text-gray-900 tracking-widest"
           >
             CARDHOLDER NAME
           </label>
           <input
             type="text"
-            id="base-input"
+            id="cardName"
             className="block w-full p-2.5 rounded-md"
             style={{
               borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
@@ -69,18 +76,18 @@ function Form({
             }
             value={inputValue.name}
           />
-          <p className="text-[12px] text[#ff5252]">{errorMessage.name}</p>
+          <p className="text-[12px] text-[#ff5252]">{errorMessage.name}</p>
         </div>{" "}
         <div className="mb-5">
           <label
-            htmlFor="base-input"
+            htmlFor="cardNumber"
             className="block mb-2 text-sm font-medium text-gray-900"
           >
             CARD NUMBER
           </label>
           <input
             type="text"
-            id="base-input"
+            id="cardNumber"
             className="block w-full p-2.5 rounded-md"
             style={{
               borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
@@ -92,11 +99,14 @@ function Form({
             onChange={handleInputChange}
             value={inputValue.cardNumber}
           />
+          <p className="text-[12px] text-[#ff5252]">
+            {errorMessage.cardNumber}
+          </p>
         </div>
         <div className="flex mb-5 z-10">
           <div>
             <label
-              htmlFor="base-input"
+              htmlFor="dateMonth"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
               EXP. DATE (MM/YY)
@@ -104,7 +114,7 @@ function Form({
             <div className="flex">
               <input
                 type="number"
-                id="base-input"
+                id="dateMonth"
                 className="block w-2/5 p-2.5 rounded-md mx-1"
                 style={{
                   borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
@@ -119,9 +129,12 @@ function Form({
                 }
                 value={inputValue.dateMonth}
               />
+              <p className="text-[12px] text-[#ff5252]">
+                {errorMessage.dateMonth}
+              </p>
               <input
                 type="number"
-                id="base-input"
+                id="dateMonth"
                 className="block w-2/5 p-2.5 rounded-md mx-1"
                 style={{
                   borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
@@ -136,18 +149,21 @@ function Form({
                 }
                 value={inputValue.dateYear}
               />
+              <p className="text-[12px] text-[#ff5252]">
+                {errorMessage.dateMonth}
+              </p>
             </div>
           </div>
           <div>
             <label
-              htmlFor="base-input"
+              htmlFor="cvcNumber"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
               CVC
             </label>
             <input
               type="number"
-              id="base-input"
+              id="cvcNumber"
               className="block w-full p-2.5 rounded-md"
               style={{
                 borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
@@ -163,6 +179,9 @@ function Form({
               }}
               value={inputValue.cvcNumber}
             />
+            <p className="text-[12px] text-[#ff5252]">
+              {errorMessage.cvcNumber}
+            </p>
           </div>
         </div>
         <button
