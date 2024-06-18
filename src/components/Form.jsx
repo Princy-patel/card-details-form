@@ -1,3 +1,6 @@
+import { useState } from "react";
+import SuccessNotification from "./SuccessNotification";
+
 function Form({
   inputValue,
   setInputValue,
@@ -5,6 +8,8 @@ function Form({
   setErrorMessage,
   errorMessage,
 }) {
+  const [submitted, setSubmitted] = useState(false);
+
   const handleInputChange = function (e) {
     let input = e.target.value;
 
@@ -39,163 +44,175 @@ function Form({
     // Update error messages
     setErrorMessage(errors);
 
-    console.log("errors", errorMessage);
-
     // If there are no errors, submit the form
     if (Object.keys(errors).length === 0) {
       setSubmitValue(inputValue);
-      console.log("Form submitted:", inputValue);
+      setSubmitted(true);
     }
   };
 
   return (
-    <div className="w-full h-screen sm:flex-1 flex justify-center items-center">
-      <form
-        className="max-w-sm mx-auto [&>label]:tracking-widest"
-        onSubmit={handleSubmit}
-      >
-        <div className="mb-5">
-          <label
-            htmlFor="cardName"
-            className="block mb-2 text-sm font-medium text-gray-900 tracking-widest"
+    <>
+      {submitted ? (
+        <SuccessNotification />
+      ) : (
+        <div className="w-full h-screen sm:flex-1 flex justify-center items-center">
+          <form
+            className="max-w-sm mx-auto [&>label]:tracking-widest"
+            onSubmit={handleSubmit}
           >
-            CARDHOLDER NAME
-          </label>
-          <input
-            type="text"
-            id="cardName"
-            className="block w-full p-2.5 rounded-md"
-            style={{
-              borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
-              borderWidth: "2px",
-              borderStyle: "solid",
-            }}
-            placeholder="e.g. Jane Appleseed"
-            onChange={(e) =>
-              setInputValue({ ...inputValue, name: e.target.value })
-            }
-            value={inputValue.name}
-          />
-          <p className="text-[12px] text-[#ff5252]">{errorMessage.name}</p>
-        </div>{" "}
-        <div className="mb-5">
-          <label
-            htmlFor="cardNumber"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            CARD NUMBER
-          </label>
-          <input
-            type="text"
-            id="cardNumber"
-            className="block w-full p-2.5 rounded-md"
-            style={{
-              borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
-              borderWidth: "2px",
-              borderStyle: "solid",
-            }}
-            placeholder="e.g. 1234 5678 9123 0000"
-            maxLength={19}
-            onChange={handleInputChange}
-            value={inputValue.cardNumber}
-          />
-          <p className="text-[12px] text-[#ff5252]">
-            {errorMessage.cardNumber}
-          </p>
-        </div>
-        <div className="flex mb-5 z-10">
-          <div>
-            <label
-              htmlFor="dateMonth"
-              className="block mb-2 text-sm font-medium text-gray-900"
-            >
-              EXP. DATE (MM/YY)
-            </label>
-            <div className="flex">
+            <div className="mb-5">
+              <label
+                htmlFor="cardName"
+                className="block mb-2 text-sm font-medium text-gray-900 tracking-widest"
+              >
+                CARDHOLDER NAME
+              </label>
+              <input
+                type="text"
+                id="cardName"
+                className="block w-full p-2.5 rounded-md"
+                style={{
+                  borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
+                  borderWidth: "2px",
+                  borderStyle: "solid",
+                }}
+                placeholder="e.g. Jane Appleseed"
+                onChange={(e) =>
+                  setInputValue({ ...inputValue, name: e.target.value })
+                }
+                value={inputValue.name}
+              />
+              <p className="text-[12px] text-[#ff5252]">{errorMessage.name}</p>
+            </div>{" "}
+            <div className="mb-5">
+              <label
+                htmlFor="cardNumber"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                CARD NUMBER
+              </label>
+              <input
+                type="text"
+                id="cardNumber"
+                className="block w-full p-2.5 rounded-md"
+                style={{
+                  borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
+                  borderWidth: "2px",
+                  borderStyle: "solid",
+                }}
+                placeholder="e.g. 1234 5678 9123 0000"
+                maxLength={19}
+                onChange={handleInputChange}
+                value={inputValue.cardNumber}
+              />
+              <p className="text-[12px] text-[#ff5252]">
+                {errorMessage.cardNumber}
+              </p>
+            </div>
+            <div className="flex mb-5 z-10">
               <div>
-                <input
-                  type="number"
-                  id="dateMonth"
-                  className="block w-4/5 p-2.5 rounded-md mx-1"
-                  style={{
-                    borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
-                    borderWidth: "2px",
-                    borderStyle: "solid",
-                  }}
-                  placeholder="MM"
-                  maxLength={2}
-                  pattern="[0-9]{2}"
-                  onChange={(e) =>
-                    setInputValue({ ...inputValue, dateMonth: e.target.value })
-                  }
-                  value={inputValue.dateMonth}
-                />
-                <p className="text-[12px] text-[#ff5252]">
-                  {errorMessage.dateMonth}
-                </p>
+                <label
+                  htmlFor="dateMonth"
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  EXP. DATE (MM/YY)
+                </label>
+                <div className="flex">
+                  <div>
+                    <input
+                      type="number"
+                      id="dateMonth"
+                      className="block w-4/5 p-2.5 rounded-md mx-1"
+                      style={{
+                        borderColor:
+                          "linear-gradient(to right, #294eff, #3a4e66)",
+                        borderWidth: "2px",
+                        borderStyle: "solid",
+                      }}
+                      placeholder="MM"
+                      maxLength={2}
+                      pattern="[0-9]{2}"
+                      onChange={(e) =>
+                        setInputValue({
+                          ...inputValue,
+                          dateMonth: e.target.value,
+                        })
+                      }
+                      value={inputValue.dateMonth}
+                    />
+                    <p className="text-[12px] text-[#ff5252]">
+                      {errorMessage.dateMonth}
+                    </p>
+                  </div>
+                  <div>
+                    <input
+                      type="number"
+                      id="dateMonth"
+                      className="block w-4/5 p-2.5 rounded-md mx-1"
+                      style={{
+                        borderColor:
+                          "linear-gradient(to right, #294eff, #3a4e66)",
+                        borderWidth: "2px",
+                        borderStyle: "solid",
+                      }}
+                      placeholder="YY"
+                      maxLength={2}
+                      pattern="[0-9]{2}"
+                      onChange={(e) =>
+                        setInputValue({
+                          ...inputValue,
+                          dateYear: e.target.value,
+                        })
+                      }
+                      value={inputValue.dateYear}
+                    />
+                    <p className="text-[12px] text-[#ff5252]">
+                      {errorMessage.dateMonth}
+                    </p>
+                  </div>
+                </div>
               </div>
               <div>
+                <label
+                  htmlFor="cvcNumber"
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  CVC
+                </label>
                 <input
                   type="number"
-                  id="dateMonth"
-                  className="block w-4/5 p-2.5 rounded-md mx-1"
+                  id="cvcNumber"
+                  className="block w-full p-2.5 rounded-md"
                   style={{
                     borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
                     borderWidth: "2px",
                     borderStyle: "solid",
                   }}
-                  placeholder="YY"
-                  maxLength={2}
-                  pattern="[0-9]{2}"
-                  onChange={(e) =>
-                    setInputValue({ ...inputValue, dateYear: e.target.value })
-                  }
-                  value={inputValue.dateYear}
+                  placeholder="e.g. 123"
+                  maxLength={3}
+                  pattern="[0-9]{3}"
+                  onChange={(e) => {
+                    const value = e.target.value.slice(0, 3);
+                    setInputValue({ ...inputValue, cvcNumber: value });
+                  }}
+                  value={inputValue.cvcNumber}
                 />
                 <p className="text-[12px] text-[#ff5252]">
-                  {errorMessage.dateMonth}
+                  {errorMessage.cvcNumber}
                 </p>
               </div>
             </div>
-          </div>
-          <div>
-            <label
-              htmlFor="cvcNumber"
-              className="block mb-2 text-sm font-medium text-gray-900"
+            <button
+              type="submit"
+              className="text-white w-full text-center bg-[#050708] hover:bg-[#050708]/80 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
             >
-              CVC
-            </label>
-            <input
-              type="number"
-              id="cvcNumber"
-              className="block w-full p-2.5 rounded-md"
-              style={{
-                borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
-                borderWidth: "2px",
-                borderStyle: "solid",
-              }}
-              placeholder="e.g. 123"
-              maxLength={3}
-              pattern="[0-9]{3}"
-              onChange={(e) => {
-                const value = e.target.value.slice(0, 3);
-                setInputValue({ ...inputValue, cvcNumber: value });
-              }}
-              value={inputValue.cvcNumber}
-            />
-            <p className="text-[12px] text-[#ff5252]">
-              {errorMessage.cvcNumber}
-            </p>
-          </div>
+              Confirm
+            </button>
+          </form>
         </div>
-        <button
-          type="submit"
-          className="text-white w-full text-center bg-[#050708] hover:bg-[#050708]/80 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-        >
-          Confirm
-        </button>
-      </form>
-    </div>
+      )}
+    </>
   );
 }
 

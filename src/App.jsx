@@ -24,11 +24,7 @@ function App() {
 
   return (
     <div className="flex justify-around relative">
-      <Cards
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-        submitValue={submitValue}
-      />
+      <Cards inputValue={inputValue} submitValue={submitValue} />
       <Form
         inputValue={inputValue}
         setInputValue={setInputValue}

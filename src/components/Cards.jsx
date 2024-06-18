@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function Cards({ inputValue, submitValue }) {
   return (
     <div className="bg-[url('/images/bg-main-desktop.png')] w-full h-screen sm:w-1/3 bg-no-repeat -z-30">
