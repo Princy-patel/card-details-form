@@ -112,46 +112,50 @@ function Form({
               EXP. DATE (MM/YY)
             </label>
             <div className="flex">
-              <input
-                type="number"
-                id="dateMonth"
-                className="block w-2/5 p-2.5 rounded-md mx-1"
-                style={{
-                  borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
-                  borderWidth: "2px",
-                  borderStyle: "solid",
-                }}
-                placeholder="MM"
-                maxLength={2}
-                pattern="[0-9]{2}"
-                onChange={(e) =>
-                  setInputValue({ ...inputValue, dateMonth: e.target.value })
-                }
-                value={inputValue.dateMonth}
-              />
-              <p className="text-[12px] text-[#ff5252]">
-                {errorMessage.dateMonth}
-              </p>
-              <input
-                type="number"
-                id="dateMonth"
-                className="block w-2/5 p-2.5 rounded-md mx-1"
-                style={{
-                  borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
-                  borderWidth: "2px",
-                  borderStyle: "solid",
-                }}
-                placeholder="YY"
-                maxLength={2}
-                pattern="[0-9]{2}"
-                onChange={(e) =>
-                  setInputValue({ ...inputValue, dateYear: e.target.value })
-                }
-                value={inputValue.dateYear}
-              />
-              <p className="text-[12px] text-[#ff5252]">
-                {errorMessage.dateMonth}
-              </p>
+              <div>
+                <input
+                  type="number"
+                  id="dateMonth"
+                  className="block w-4/5 p-2.5 rounded-md mx-1"
+                  style={{
+                    borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
+                    borderWidth: "2px",
+                    borderStyle: "solid",
+                  }}
+                  placeholder="MM"
+                  maxLength={2}
+                  pattern="[0-9]{2}"
+                  onChange={(e) =>
+                    setInputValue({ ...inputValue, dateMonth: e.target.value })
+                  }
+                  value={inputValue.dateMonth}
+                />
+                <p className="text-[12px] text-[#ff5252]">
+                  {errorMessage.dateMonth}
+                </p>
+              </div>
+              <div>
+                <input
+                  type="number"
+                  id="dateMonth"
+                  className="block w-4/5 p-2.5 rounded-md mx-1"
+                  style={{
+                    borderColor: "linear-gradient(to right, #294eff, #3a4e66)",
+                    borderWidth: "2px",
+                    borderStyle: "solid",
+                  }}
+                  placeholder="YY"
+                  maxLength={2}
+                  pattern="[0-9]{2}"
+                  onChange={(e) =>
+                    setInputValue({ ...inputValue, dateYear: e.target.value })
+                  }
+                  value={inputValue.dateYear}
+                />
+                <p className="text-[12px] text-[#ff5252]">
+                  {errorMessage.dateMonth}
+                </p>
+              </div>
             </div>
           </div>
           <div>
