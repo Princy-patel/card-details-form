@@ -38,5 +38,5 @@ If you have any ideas, suggestions, or bug fixes, feel free to submit a pull req
 
 ## Acknowledgements
 
- - I want to acknowledge your interest in the Project. Your feedback is valuable to me, Feel free to share your thoughts or suggestions.<br/> Thank you! 😊
+ - I want to acknowledge your interest in the Project. Your feedback is valuable to me, Feel free to share your thoughts or suggestions.<br/> Thank you! 😊😇
 
